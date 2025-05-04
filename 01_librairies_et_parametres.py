@@ -29,7 +29,7 @@ import xgboost as xgb
 flux_primaires = ["FLUX A", "FLUX B", "FLUX C", "FLUX D", "FLUX E"]
 
 # Dates de début et de fin de la période à prédire
-# ! # La date_debut correspond au jour suivant la dernière date présente dans les données disponibles
+# ! # La date_debut correspond au jour suivant la dernière date présente dans le fichier Excel
 date_debut_str = "(04/09/2024)"
 date_fin_str = "(15/10/2024)"
 
