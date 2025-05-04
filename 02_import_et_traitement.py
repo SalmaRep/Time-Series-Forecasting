@@ -52,7 +52,5 @@ df['new_Recus'] = df.apply(lambda row: row.Recus if row.anomaly == 1 else None, 
 
 # F) Remplissage des données manquantes par moyenne mobile (sur 30 jours)
 df = df.assign(rolling_mean=df.new_Recus.fillna(df.new_Recus.rolling(31, min_periods=1).mean()))
-
-# G) Suppression des valeurs manquantes et remplissage avec la moyenne mobile
 df = df.dropna()  # Supprimer les valeurs manquantes
 df = df.drop(columns=['Recus', 'anomaly', 'dayofweek', 'new_Recus']).rename(columns={'rolling_mean': 'Recus'})
