@@ -60,6 +60,15 @@ Pour garantir la fiabilité des prévisions, il est essentiel de :
 Ces métriques permettent d’évaluer la qualité des prévisions désagrégées et de garantir que le modèle répond aux objectifs de performance.
 
 ---
+## Adaptabilité du code
+
+Le projet est conçu de manière modulaire et peut être facilement adapté à différents cas d’usage :
+
+- Il peut être utilisé pour **une seule série temporelle** (un seul flux) en désactivant la logique de répartition des poids.
+- Le code est également flexible pour s’adapter à des configurations plus complexes avec **plusieurs flux** ou entités (produits, canaux, régions, etc.).
+
+Le modèle peut ainsi être utilisé pour des prévisions simples ou pour des pipelines de prévision à plus grande échelle, selon les besoins du projet.
+
 ---
 
 ## Étapes préliminaires : Tests statistiques à réaliser
@@ -101,9 +110,14 @@ Une fois le modèle entraîné, il est important de tester la normalité des ré
 
 ### Hétéroscédasticité
 
-L’hétéroscédasticité se réfère à la variabilité non constante des résidus au fil du temps. Pour la détecter, on peut utiliser le tests suivant :
+- L’hétéroscédasticité désigne une variance non constante des résidus dans le temps. Elle peut affecter la qualité des prévisions et fausser les intervalles de confiance, car les modèles supposent souvent une variance homogène (homoscédasticité).
 
-- **Test de Breusch-Pagan**
+Pour détecter l’hétéroscédasticité, on peut utiliser le test suivant :
+
+- **Test de Breusch-Pagan**  
+  - Il évalue si la variance des résidus dépend de certaines variables explicatives.  
+  - Hypothèse nulle (H0) : les résidus sont homoscédastiques (variance constante).  
+  - Si la *p-value* < 0.05 → on rejette H0 → il existe une hétéroscédasticité.
 
 ### Transformation des données en cas d’hétéroscédasticité
 
@@ -112,16 +126,6 @@ Si l'hétéroscédasticité est détectée, une transformation des données peut
 - **Transformation logarithmique** : Prendre le logarithme des valeurs de la série peut réduire l'impact des valeurs extrêmes et stabiliser la variance.
 
 Cette transformation peut améliorer la performance du modèle en éliminant les effets de l’hétéroscédasticité et en rendant les données plus adaptées aux techniques de modélisation classiques.
-
----
-## Adaptabilité du code
-
-Le projet est conçu de manière modulaire et peut être facilement adapté à différents cas d’usage :
-
-- Il peut être utilisé pour **une seule série temporelle** (un seul flux) en désactivant la logique de répartition des poids.
-- Le code est également flexible pour s’adapter à des configurations plus complexes avec **plusieurs flux** ou entités (produits, canaux, régions, etc.).
-
-Le modèle peut ainsi être utilisé pour des prévisions simples ou pour des pipelines de prévision à plus grande échelle, selon les besoins du projet.
 
 ---
 
