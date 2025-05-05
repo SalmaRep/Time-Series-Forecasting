@@ -17,7 +17,7 @@ Ce projet a pour objectif de modéliser et prédire l'évolution d'une variable 
 
 ## Fonctionnalités
 
-- Prévisions sur des périodes définies à partir de séries temporelles.
+- **Prévisions sur des périodes définies** à partir de séries temporelles : le modèle permet à l'utilisateur de **choisir** la période qu'il souhaite prédire, offrant ainsi une flexibilité dans la planification des prévisions (ex. : prévisions sur les 30 prochains jours, sur les 3 prochains mois, etc.).
 - Analyse des tendances, variations saisonnières et anomalies.
 - Développement de modèles prédictifs pour améliorer la prise de décision.
 - Génération de tableaux de bord automatisés à partir des résultats de prévision.
@@ -26,43 +26,49 @@ Ce projet a pour objectif de modéliser et prédire l'évolution d'une variable 
 
 ## Spécificité du modèle
 
-L’une des particularités de ce projet est qu'il permet d’entraîner **un modèle global de prédiction** pour plusieurs flux , sans nécessiter la construction d’un modèle distinct pour chaque flux. Cette approche permet :
+Ce projet permet d’entraîner **un seul modèle global de prédiction** pour l’ensemble des flux, au lieu de devoir créer un modèle distinct pour chaque flux. Cela permet de simplifier la gestion du processus de modélisation tout en offrant **une évolutivité accrue** dans les environnements multi-flux.
 
-- Une simplification de la gestion du processus de modélisation.
-- Un gain de temps dans l’entraînement des modèles et une meilleure maintenance à long terme.
-- Une plus grande scalabilité dans les environnements où de nouveaux flux peuvent apparaître.
+### **Recalcul dynamique des poids**
 
-Une fois le modèle global de prédiction créé, les prévisions sont **réparties entre les différents flux** à l’aide de **poids historiques** recalculés à chaque période (typiquement chaque mois). Ces poids sont basés sur la répartition historique des flux par **jour de la semaine**, en excluant les week-ends et jours fériés. Ils reflètent la contribution de chaque flux à la charge totale journalière observée récemment.
+Les prévisions obtenues par le modèle global sont **désagrégées** entre les différents flux en utilisant des **poids historiques recalculés à chaque période de prédiction**. Ces poids sont basés sur la répartition des flux observée **par jour de la semaine**, en excluant les week-ends et jours fériés. Chaque poids représente la contribution moyenne de chaque flux à la charge totale journalière. 
 
-> **Important** : Les poids sont **toujours recalculés en fonction des derniers mois de données**, garantissant ainsi que la répartition des flux soit toujours mise à jour avec les données les plus récentes. Cela permet d’adapter la répartition aux évolutions récentes des flux tout en conservant une granularité pertinente dans les prévisions.
+Il est essentiel de souligner que ces poids sont **calculés sur les derniers mois de données** et sont régulièrement **réajustés** pour tenir compte des évolutions récentes. Cela garantit que les prévisions restent adaptées aux tendances actuelles des flux.
 
-Cette méthode repose sur l’hypothèse de **stabilité temporelle** des répartitions des flux. Toute évolution majeure dans la structure des flux ou des comportements opérationnels peut nécessiter un recalibrage des poids, ce qui doit être vérifié régulièrement.
+### **Étude préalable de chaque flux**
+
+Avant de recourir à un modèle global, il est primordial de procéder à une **analyse approfondie** de chaque flux de manière **indépendante**, en étudiant leur comportement sur plusieurs périodes (mois, semaines, jours). Cela permet de comprendre les dynamiques spécifiques de chaque flux et de vérifier que l’hypothèse de **stabilité** de leur répartition dans le temps est valide.
+
+L’utilisation d’un modèle global pour répartir les prévisions entre les flux ne sera efficace que si cette structure de répartition entre les flux reste relativement stable au fil du temps. Il est donc crucial de vérifier que chaque flux présente des caractéristiques similaires en termes de saisonnalité et de comportement avant de procéder à l’entraînement du modèle global.
+
+### **Réévaluation continue de la logique**
+
+Même avec des poids recalculés régulièrement, il est important de **réévaluer périodiquement** la logique d’utilisation d’un modèle global. En fonction des résultats obtenus et des nouvelles données, il peut être nécessaire d’ajuster la méthode de répartition ou de passer à des modèles plus spécifiques si la structure des flux change de manière significative.
 
 ---
 
 ## Qualité des données et évaluation des performances
 
-Pour garantir des prévisions fiables et cohérentes, il est essentiel de :
+Pour garantir la fiabilité des prévisions, il est essentiel de :
 
-- Utiliser une base de données **propre et de qualité**, avec une couverture temporelle suffisante pour calculer des poids significatifs.
-- Analyser régulièrement la **stabilité de la répartition des flux** afin de s’assurer que les poids calculés sont toujours représentatifs des tendances actuelles.
-- Tester la performance du modèle pour chaque flux, même dans un cadre global. Des **métriques de précision** comme :
+- Utiliser une **base de données propre, complète et suffisamment historique** pour calculer des poids de manière robuste.
+- Vérifier que la **répartition des flux** reste stable dans le temps avant d’appliquer les poids recalculés.
+- Tester la performance du modèle pour chaque flux, même si le modèle est global. Des **métriques de précision** telles que :
   - **MAPE (Mean Absolute Percentage Error)**
   - **RMSE (Root Mean Squared Error)**
   - **MAE (Mean Absolute Error)**
 
-Ces métriques permettent d’évaluer la fiabilité des prévisions désagrégées et d’ajuster les modèles ou les poids si nécessaire.
+Ces métriques permettent d’évaluer la qualité des prévisions désagrégées et de garantir que le modèle répond aux objectifs de performance.
 
 ---
 
 ## Adaptabilité du code
 
-Le projet est conçu de manière modulaire, ce qui permet de l’adapter à divers cas d’usage :
+Le projet est conçu de manière modulaire et peut être facilement adapté à différents cas d’usage :
 
 - Il peut être utilisé pour **une seule série temporelle** (un seul flux) en désactivant la logique de répartition des poids.
-- Le code est aussi facilement adaptable à d’autres **regroupements ou entités** comme des régions, des produits, ou des canaux de distribution.
+- Le code est également flexible pour s’adapter à des configurations plus complexes avec **plusieurs flux** ou entités (produits, canaux, régions, etc.).
 
-La flexibilité du modèle permet de l’utiliser pour des prévisions centralisées ou pour des applications à plus grande échelle.
+Le modèle peut ainsi être utilisé pour des prévisions simples ou pour des pipelines de prévision à plus grande échelle, selon les besoins du projet.
 
 ---
 
