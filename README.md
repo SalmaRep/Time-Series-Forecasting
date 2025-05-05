@@ -26,7 +26,7 @@ Ce projet a pour objectif de modéliser et prédire l'évolution d'une variable 
 
 ## Spécificité du modèle
 
-Ce projet permet d’entraîner **un seul modèle global de prédiction** pour l’ensemble des flux, au lieu de devoir créer un modèle distinct pour chaque flux. Cela permet de simplifier la gestion du processus de modélisation tout en offrant **une évolutivité accrue** dans les environnements multi-flux.
+Ce projet permet d’entraîner **un seul modèle global de prédiction** pour l’ensemble des flux. Cela permet de simplifier la gestion du processus de modélisation dans les environnements multi-flux.
 
 ### **Recalcul dynamique des poids**
 
