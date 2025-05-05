@@ -17,7 +17,7 @@ Ce projet a pour objectif de modéliser et prédire l'évolution d'une variable 
 
 ## Fonctionnalités
 
-- Prévisions sur des horizons définis à partir de séries temporelles.
+- Prévisions sur des périodes définies à partir de séries temporelles.
 - Analyse des tendances, variations saisonnières et anomalies.
 - Développement de modèles prédictifs pour améliorer la prise de décision.
 - Génération de tableaux de bord automatisés à partir des résultats de prévision.
