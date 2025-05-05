@@ -50,7 +50,7 @@ Même avec des poids recalculés régulièrement, il est important de **rééval
 
 Pour garantir la fiabilité des prévisions, il est essentiel de :
 
-- Utiliser une **base de données propre, complète et suffisamment historique** pour calculer des poids de manière robuste.
+- Utiliser une **base de données propre et complète** pour calculer des poids de manière robuste.
 - Vérifier que la **répartition des flux** reste stable dans le temps avant d’appliquer les poids recalculés.
 - Tester la performance du modèle pour chaque flux, même si le modèle est global. Des **métriques de précision** telles que :
   - **MAPE (Mean Absolute Percentage Error)**
