@@ -26,7 +26,7 @@ Ce projet a pour objectif de modéliser et prédire l'évolution d'une variable 
 
 ## Spécificité du modèle
 
-L’une des particularités de ce projet est qu'il permet d’entraîner **un modèle global de prédiction** pour plusieurs flux primaires, sans nécessiter la construction d’un modèle distinct pour chaque flux. Cette approche permet :
+L’une des particularités de ce projet est qu'il permet d’entraîner **un modèle global de prédiction** pour plusieurs flux , sans nécessiter la construction d’un modèle distinct pour chaque flux. Cette approche permet :
 
 - Une simplification de la gestion du processus de modélisation.
 - Un gain de temps dans l’entraînement des modèles et une meilleure maintenance à long terme.
