@@ -60,7 +60,60 @@ Pour garantir la fiabilité des prévisions, il est essentiel de :
 Ces métriques permettent d’évaluer la qualité des prévisions désagrégées et de garantir que le modèle répond aux objectifs de performance.
 
 ---
+---
 
+## Étapes préliminaires : Tests statistiques à réaliser
+
+Avant de procéder à la modélisation des séries temporelles, il est essentiel de vérifier les propriétés des données à l’aide de tests statistiques. Ces tests permettent de valider les hypothèses nécessaires à la modélisation.
+
+### Stationnarité
+
+La stationnarité est une condition clé pour de nombreux modèles de séries temporelles. Les tests suivants sont utilisés pour évaluer la stationnarité :
+
+- **Test ADF (Augmented Dickey-Fuller)**  
+  - **Hypothèse nulle (H0)** : La série est non stationnaire.  
+  - Si la **p-value** < 0.05 → Rejet de H0 → La série est **stationnaire**.
+
+- **Test KPSS (Kwiatkowski-Phillips-Schmidt-Shin)**  
+  - **Hypothèse nulle (H0)** : La série est stationnaire.  
+  - Si la **p-value** < 0.05 → Rejet de H0 → La série est **non stationnaire**.
+
+> **Conseil** : Utiliser ces deux tests permet de confirmer la stationnarité de la série avec plus de fiabilité.
+
+### Autocorrélation
+
+Les tests suivants permettent d’analyser la dépendance temporelle dans les données :
+
+- **ACF (Autocorrelation Function)** : Évalue la corrélation entre la série et ses lags (retards).
+- **PACF (Partial Autocorrelation Function)** : Permet de visualiser les lags significatifs après ajustement.
+
+Ces outils aident à identifier la présence de composantes saisonnières ou de dépendances à court terme.
+
+### Normalité des résidus
+
+Une fois le modèle entraîné, il est important de tester la normalité des résidus, car cela affecte la précision des prévisions et des intervalles de confiance. Pour ce faire, on peut utiliser le test suivant :
+
+- **Kolmogorov-Smirnov (KS test)**  
+  - Hypothèse nulle (H0) : les résidus suivent une distribution normale.  
+  - Si la *p-value* < 0.05 → on rejette H0 → les résidus ne sont pas normalement distribués.
+
+> Des résidus normalement distribués améliorent la fiabilité des intervalles de confiance pour les prévisions.
+
+### Hétéroscédasticité
+
+L’hétéroscédasticité se réfère à la variabilité non constante des résidus au fil du temps. Pour la détecter, on peut utiliser le tests suivant :
+
+- **Test de Breusch-Pagan**
+
+### Transformation des données en cas d’hétéroscédasticité
+
+Si l'hétéroscédasticité est détectée, une transformation des données peut être nécessaire pour stabiliser la variance des erreurs. Parmi les solutions couramment utilisées, on peut envisager :
+
+- **Transformation logarithmique** : Prendre le logarithme des valeurs de la série peut réduire l'impact des valeurs extrêmes et stabiliser la variance.
+
+Cette transformation peut améliorer la performance du modèle en éliminant les effets de l’hétéroscédasticité et en rendant les données plus adaptées aux techniques de modélisation classiques.
+
+---
 ## Adaptabilité du code
 
 Le projet est conçu de manière modulaire et peut être facilement adapté à différents cas d’usage :
