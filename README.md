@@ -26,53 +26,53 @@ Ce projet a pour objectif de modéliser et prédire l'évolution d'une variable 
 
 ## Spécificité du modèle
 
-Une caractéristique centrale de ce projet est la possibilité d’entraîner **un seul modèle global** sur l’ensemble des flux étudiés, plutôt que de développer un modèle distinct pour chaque flux primaire. Cette approche permet :
+L’une des particularités de ce projet est qu'il permet d’entraîner **un modèle global de prédiction** pour plusieurs flux primaires, sans nécessiter la construction d’un modèle distinct pour chaque flux. Cette approche permet :
 
-- Une réduction significative du temps de développement et de la complexité technique.
-- Une meilleure maintenabilité du pipeline de modélisation.
-- Une évolutivité plus simple dans un environnement multi-flux.
+- Une simplification de la gestion du processus de modélisation.
+- Un gain de temps dans l’entraînement des modèles et une meilleure maintenance à long terme.
+- Une plus grande scalabilité dans les environnements où de nouveaux flux peuvent apparaître.
 
-Les prévisions globales obtenues sont ensuite **désagrégées entre les flux** à l’aide de **poids historiques**, calculés par **jour de la semaine**, en excluant les week-ends et les jours fériés. Ces poids reflètent la contribution moyenne de chaque flux à la charge totale journalière observée historiquement.
+Une fois le modèle global de prédiction créé, les prévisions sont **réparties entre les différents flux** à l’aide de **poids historiques** recalculés à chaque période (typiquement chaque mois). Ces poids sont basés sur la répartition historique des flux par **jour de la semaine**, en excluant les week-ends et jours fériés. Ils reflètent la contribution de chaque flux à la charge totale journalière observée récemment.
 
-> Cette méthode repose sur une **hypothèse forte** : la **stabilité temporelle de la répartition des flux**. Toute modification structurelle dans le comportement des flux (réorganisation, nouvelles affectations, changements opérationnels) peut rendre cette méthode inappropriée sans recalibrage.
+> **Important** : Les poids sont **toujours recalculés en fonction des derniers mois de données**, garantissant ainsi que la répartition des flux soit toujours mise à jour avec les données les plus récentes. Cela permet d’adapter la répartition aux évolutions récentes des flux tout en conservant une granularité pertinente dans les prévisions.
+
+Cette méthode repose sur l’hypothèse de **stabilité temporelle** des répartitions des flux. Toute évolution majeure dans la structure des flux ou des comportements opérationnels peut nécessiter un recalibrage des poids, ce qui doit être vérifié régulièrement.
 
 ---
 
 ## Qualité des données et évaluation des performances
 
-Pour assurer la robustesse des résultats, il est impératif de :
+Pour garantir des prévisions fiables et cohérentes, il est essentiel de :
 
-- Utiliser une base de données propre, cohérente et suffisamment longue pour calculer des poids fiables.
-- Vérifier la stabilité de la structure de répartition des flux dans le temps à l’aide d’analyses exploratoires.
-- Évaluer la qualité des prévisions désagrégées pour chaque flux à l’aide de métriques standards telles que :
+- Utiliser une base de données **propre et de qualité**, avec une couverture temporelle suffisante pour calculer des poids significatifs.
+- Analyser régulièrement la **stabilité de la répartition des flux** afin de s’assurer que les poids calculés sont toujours représentatifs des tendances actuelles.
+- Tester la performance du modèle pour chaque flux, même dans un cadre global. Des **métriques de précision** comme :
+  - **MAPE (Mean Absolute Percentage Error)**
+  - **RMSE (Root Mean Squared Error)**
+  - **MAE (Mean Absolute Error)**
 
-  - MAPE (Mean Absolute Percentage Error)
-  - RMSE (Root Mean Squared Error)
-  - MAE (Mean Absolute Error)
-
-Ces analyses permettent de valider la pertinence du modèle global ainsi que la justesse de la désagrégation.
+Ces métriques permettent d’évaluer la fiabilité des prévisions désagrégées et d’ajuster les modèles ou les poids si nécessaire.
 
 ---
 
 ## Adaptabilité du code
 
-Le code est conçu de manière modulaire pour s’adapter à différents cas d’usage. Il peut être utilisé :
+Le projet est conçu de manière modulaire, ce qui permet de l’adapter à divers cas d’usage :
 
-- Pour un seul flux (série temporelle unique), en désactivant simplement la logique de pondération.
-- Pour plusieurs entités (flux, canaux, produits, régions…), en adaptant la logique de regroupement.
-- Dans des environnements métiers où la structure des flux est stable et prévisible.
+- Il peut être utilisé pour **une seule série temporelle** (un seul flux) en désactivant la logique de répartition des poids.
+- Le code est aussi facilement adaptable à d’autres **regroupements ou entités** comme des régions, des produits, ou des canaux de distribution.
 
-Cette flexibilité rend le projet facilement réutilisable dans des contextes variés, tant pour des analyses ponctuelles que pour des pipelines de prévision en production.
+La flexibilité du modèle permet de l’utiliser pour des prévisions centralisées ou pour des applications à plus grande échelle.
 
 ---
 
 ## Accès au code
 
-Le code source de ce projet est actuellement privé.
+Le code source de ce projet est actuellement **privé**.
 
 Pour en faire la demande, veuillez me contacter par email :  
 **atik.salma00@gmail.com**
 
-ou via une demande GitHub. L’accès est restreint aux utilisateurs autorisés.
+Ou via une demande GitHub. L’accès est restreint aux utilisateurs autorisés.
 
 ---
