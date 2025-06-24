@@ -129,13 +129,3 @@ Cette transformation peut améliorer la performance du modèle en éliminant les
 
 ---
 
-## Accès au code
-
-Le code source de ce projet est actuellement **privé**.
-
-Pour en faire la demande, veuillez me contacter par email :  
-**atik.salma00@gmail.com**
-
-Ou via une demande GitHub. L’accès est restreint aux utilisateurs autorisés.
-
----
